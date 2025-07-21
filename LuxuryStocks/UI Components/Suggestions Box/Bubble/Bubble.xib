@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BubbleView" customModule="LuxuryStocks" customModuleProvider="target">
+            <connections>
+                <outlet property="bubbleText" destination="Lha-wF-Aqz" id="ilz-ap-Rt7"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="BubbleView" customModule="LuxuryStocks" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MJQ-V6-Jvu">
+                    <rect key="frame" x="10" y="54" width="394" height="798"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lha-wF-Aqz">
+                            <rect key="frame" x="20" y="10" width="354" height="778"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                    <constraints>
+                        <constraint firstItem="Lha-wF-Aqz" firstAttribute="top" secondItem="MJQ-V6-Jvu" secondAttribute="top" constant="10" id="8jI-En-oIe"/>
+                        <constraint firstAttribute="bottom" secondItem="Lha-wF-Aqz" secondAttribute="bottom" constant="10" id="W3k-3E-tkm"/>
+                        <constraint firstAttribute="trailing" secondItem="Lha-wF-Aqz" secondAttribute="trailing" constant="20" id="Zhn-eV-gjk"/>
+                        <constraint firstItem="Lha-wF-Aqz" firstAttribute="leading" secondItem="MJQ-V6-Jvu" secondAttribute="leading" constant="20" id="sRs-VG-JmF"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="20"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="MJQ-V6-Jvu" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="90U-Xo-iY1"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="MJQ-V6-Jvu" secondAttribute="trailing" constant="10" id="AcE-xQ-b2C"/>
+                <constraint firstItem="MJQ-V6-Jvu" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="10" id="LDI-jo-VfO"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="MJQ-V6-Jvu" secondAttribute="bottom" constant="10" id="Vze-wX-sVC"/>
+            </constraints>
+            <point key="canvasLocation" x="132" y="69"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
