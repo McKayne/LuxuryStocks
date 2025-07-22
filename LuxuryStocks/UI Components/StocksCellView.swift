@@ -19,11 +19,11 @@ class StocksCellView: UITableViewCell {
     
     @IBOutlet weak var stocksChange: UILabel!
     
+    @IBOutlet weak var favoritesImage: UIImageView!
+    
     func setupStocksCell(with entity: StocksEntity, loadImageHandler: @escaping () -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.stocksImage.image = entity.stocksImage ?? UIImage(named: "AppIcon")
-            self.stocksImage.setNeedsDisplay()
-        }
+        stocksImage.image = entity.stocksImage ?? UIImage(named: "AppIcon")
+        stocksImage.setNeedsDisplay()
         
         if entity.stocksImage == nil {
             loadImageHandler()
@@ -35,5 +35,8 @@ class StocksCellView: UITableViewCell {
         stocksPrice.text = "$\(entity.price)"
         stocksChange.text = "\(entity.change >= 0 ? "+" : "-")$\(abs(entity.change)) (\(abs(entity.changePercent))%)"
         stocksChange.textColor = entity.change >= 0 ? .green : .red
+        
+        favoritesImage.image = UIImage(named: entity.isFavorite == true ? "FavoritesActive" : "BackArrow")
+        favoritesImage.setNeedsDisplay()
     }
 }

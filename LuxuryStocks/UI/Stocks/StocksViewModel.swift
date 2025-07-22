@@ -15,28 +15,40 @@ class StocksViewModel {
     
     // MARK: - Stocks list
     
-    func fetchStocks() -> PassthroughSubject<[StocksEntity], Error> {
-        let stocksPublisher = PassthroughSubject<[StocksEntity], Error>()
+    func fetchStocks() -> PassthroughSubject<([StocksEntity], Bool), Error> {
+        let stocksPublisher = PassthroughSubject<([StocksEntity], Bool), Error>()
         
         let configutation = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
         
-        if let realm = try? Realm(configuration: configutation) {
+        if let stocksURL = Bundle.main.infoDictionary?["Stocks URL"] as? String, let url = URL(string: stocksURL), let realm = try? Realm(configuration: configutation) {
             let realmPublisher = PassthroughSubject<Realm, Error>()
             
             Publishers.Zip(
-                fetchStockData(),
+                fetchStockData(url: url),
                 fetchCachedStocks(realmPublisher: realmPublisher)
-            ).sink(receiveCompletion: { _ in
-            }, receiveValue: { apiData, cachedData in
-                let stocksData: [StocksEntity] = apiData.map { originalStocks in
-                    originalStocks.isFavorite = cachedData.first { $0.symbol == originalStocks.symbol }?.isFavorite == true
-                    return originalStocks
+            ).receive(on: RunLoop.main)
+                .sink(receiveCompletion: { _ in
+            }, receiveValue: { apiStocks, cachedStocks in
+                
+                if let apiStocks = apiStocks {
+                    let stocks: [StocksEntity]
+                    
+                    if let cachedStocks = cachedStocks {
+                        stocks = apiStocks.map { originalStocks in
+                            originalStocks.isFavorite = cachedStocks.first { $0.symbol == originalStocks.symbol }?.isFavorite == true
+                            return originalStocks
+                        }
+                    } else {
+                        stocks = apiStocks
+                    }
+                    
+                    self.saveStocksToCache(stocks: stocks, to: realm)
+                    stocksPublisher.send((stocks, false))
+                } else {
+                    if let cachedStocks = cachedStocks {
+                        stocksPublisher.send((cachedStocks, true))
+                    }
                 }
-                
-                //print(stocksData)
-                //print(cachedData)
-                
-                stocksPublisher.send(stocksData)
             }).store(in: &subscriptions)
             
             realmPublisher.send(realm)
@@ -45,21 +57,23 @@ class StocksViewModel {
         return stocksPublisher
     }
     
-    func fetchStockData() -> AnyPublisher<[StocksEntity], Error> {
-        if let stocksURL = Bundle.main.infoDictionary?["Stocks URL"] as? String, let url = URL(string: stocksURL) {
-            return URLSession.shared.dataTaskPublisher(for: url)
-                .map(\.data)
-                .decode(type: [StocksEntity].self, decoder: JSONDecoder())
-                .eraseToAnyPublisher()
-        } else {
-            return Fail<[StocksEntity], Error>(error: URLError(.badURL)).eraseToAnyPublisher()
-        }
+    func fetchStockData(url: URL) -> AnyPublisher<[StocksEntity]?, Never> {
+        return URLSession.shared.dataTaskPublisher(for: url)
+            .map(\.data)
+            .decode(type: [StocksEntity]?.self, decoder: JSONDecoder())
+            .catch { error -> AnyPublisher<[StocksEntity]?, Never> in
+                return Just(nil).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
     
-    func fetchCachedStocks(realmPublisher: PassthroughSubject<Realm, Error>) -> AnyPublisher<[StocksEntity], Error> {
+    func fetchCachedStocks(realmPublisher: PassthroughSubject<Realm, Error>) -> AnyPublisher<[StocksEntity]?, Never> {
         let publisher = realmPublisher.map { realm in
             return Array(realm.objects(StocksEntity.self))
-        }.eraseToAnyPublisher()
+        }.catch { error -> AnyPublisher<[StocksEntity]?, Never> in
+            return Just(nil).eraseToAnyPublisher()
+        }
+        .eraseToAnyPublisher()
         
         return publisher
     }
@@ -126,5 +140,36 @@ class StocksViewModel {
     
     private func cachedImage(for symbol: String) -> UIImage? {
         return UIImage()
+    }
+    
+    // MARK: - Database
+    
+    private func saveStocksToCache(stocks: [StocksEntity], to realm: Realm) {
+        do {
+            try realm.write {
+                realm.add(stocks, update: .modified)
+            }
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func changeFavoritesState(entity: StocksEntity) -> StocksEntity {
+        let configutation = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
+        
+        if let realm = try? Realm(configuration: configutation) {
+            do {
+                try realm.write {
+                    let isFavorite = entity.isFavorite ?? false
+                    entity.isFavorite = !isFavorite
+                    
+                    realm.add(entity, update: .modified)
+                }
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }
+        
+        return entity
     }
 }

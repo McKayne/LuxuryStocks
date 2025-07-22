@@ -12,7 +12,8 @@ extension StocksController: UITableViewDelegate, UITableViewDataSource {
     // MARK: - Delegate methods
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        filteredStocks[indexPath.row] = stocksViewModel.changeFavoritesState(entity: filteredStocks[indexPath.row])
+        stocksTableView.reloadData()
     }
     
     // MARK: - Data source

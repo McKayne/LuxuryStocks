@@ -9,7 +9,7 @@ import UIKit
 
 class StocksController: UIViewController {
     
-    private let stocksViewModel = StocksViewModel()
+    let stocksViewModel = StocksViewModel()
     
     var currentStocks: [StocksEntity] = []
     var filteredStocks: [StocksEntity] = []
@@ -79,7 +79,11 @@ class StocksController: UIViewController {
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { _ in
         }, receiveValue: { stocks in
-            self.updateStocks(stocks: stocks)
+            self.updateStocks(stocks: stocks.0)
+            
+            if stocks.1 {
+                self.presentNetworkErrorAlert()
+            }
         }).store(in: &stocksViewModel.subscriptions)
     }
     
@@ -124,6 +128,13 @@ class StocksController: UIViewController {
     
     // MARK: - Alerts
     
-    
+    private func presentNetworkErrorAlert() {
+        let alertController = UIAlertController(title: "Network Error", message: "Unable to fetch stocks list at this time. Please chack your internet connection", preferredStyle: .alert)
+        
+        let dismissAction = UIAlertAction(title: "OK", style: .default)
+        
+        alertController.addAction(dismissAction)
+        present(alertController, animated: true)
+    }
 }
 
