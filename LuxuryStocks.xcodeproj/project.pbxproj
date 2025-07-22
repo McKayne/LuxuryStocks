@@ -32,6 +32,8 @@
 		7F9E622A2E30005E00F9CF4C /* SuggestionsBoxDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9E62292E30005E00F9CF4C /* SuggestionsBoxDelegate.swift */; };
 		7F9E622C2E3005C600F9CF4C /* StocksControllerSuggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9E622B2E3005C600F9CF4C /* StocksControllerSuggestions.swift */; };
 		7F9E622E2E300BF000F9CF4C /* SearchEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9E622D2E300BF000F9CF4C /* SearchEntity.swift */; };
+		7F9E62302E301A1000F9CF4C /* TabBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9E622F2E301A1000F9CF4C /* TabBarDelegate.swift */; };
+		7F9E62322E301BF900F9CF4C /* StocksControllerTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9E62312E301BF900F9CF4C /* StocksControllerTabBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +62,8 @@
 		7F9E62292E30005E00F9CF4C /* SuggestionsBoxDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsBoxDelegate.swift; sourceTree = "<group>"; };
 		7F9E622B2E3005C600F9CF4C /* StocksControllerSuggestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksControllerSuggestions.swift; sourceTree = "<group>"; };
 		7F9E622D2E300BF000F9CF4C /* SearchEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEntity.swift; sourceTree = "<group>"; };
+		7F9E622F2E301A1000F9CF4C /* TabBarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarDelegate.swift; sourceTree = "<group>"; };
+		7F9E62312E301BF900F9CF4C /* StocksControllerTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksControllerTabBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +129,7 @@
 				7F68CB4B2E2BF04A0059723B /* StocksViewModel.swift */,
 				7F69BB202E2C858400A63186 /* StocksControllerSearch.swift */,
 				7F9E622B2E3005C600F9CF4C /* StocksControllerSuggestions.swift */,
+				7F9E62312E301BF900F9CF4C /* StocksControllerTabBar.swift */,
 			);
 			path = Stocks;
 			sourceTree = "<group>";
@@ -143,6 +148,7 @@
 			children = (
 				7F69BB192E2C795400A63186 /* TabBar.swift */,
 				7F69BB1C2E2C798000A63186 /* TabBar.xib */,
+				7F9E622F2E301A1000F9CF4C /* TabBarDelegate.swift */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -271,7 +277,9 @@
 			files = (
 				7F9E622E2E300BF000F9CF4C /* SearchEntity.swift in Sources */,
 				7F807D1B2E2D953B00D0AA50 /* SuggestionsBoxView.swift in Sources */,
+				7F9E62322E301BF900F9CF4C /* StocksControllerTabBar.swift in Sources */,
 				7F69BB212E2C858400A63186 /* StocksControllerSearch.swift in Sources */,
+				7F9E62302E301A1000F9CF4C /* TabBarDelegate.swift in Sources */,
 				7F69BB1A2E2C795400A63186 /* TabBar.swift in Sources */,
 				7F68CB352E2BEB560059723B /* StocksController.swift in Sources */,
 				7F68CB312E2BEB560059723B /* AppDelegate.swift in Sources */,

@@ -46,6 +46,9 @@
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="xibName" value="TabBar"/>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="adx-GZ-RQ7"/>
+                                        </connections>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ebh-5l-IFJ">
                                         <rect key="frame" x="0.0" y="140" width="414" height="5"/>
@@ -297,6 +300,7 @@
                         <outlet property="stocksView" destination="Bqg-qq-yP2" id="r00-b1-oTr"/>
                         <outlet property="suggestingsView" destination="mpE-Em-QDa" id="TIu-Hp-fR9"/>
                         <outlet property="suggestionsBox" destination="Th7-OV-Z8e" id="2nL-fp-Acu"/>
+                        <outlet property="tabBar" destination="7bh-8R-dLo" id="NA8-bc-nTK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

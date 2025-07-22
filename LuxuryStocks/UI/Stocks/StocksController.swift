@@ -28,6 +28,8 @@ class StocksController: UIViewController {
     
     @IBOutlet weak var searchField: SearchField!
     
+    @IBOutlet weak var tabBar: TabBar!
+    
     // MARK: - Stocks list
     
     @IBOutlet weak var stocksTableView: UITableView!
@@ -103,6 +105,10 @@ class StocksController: UIViewController {
     
     func reloadListithFilter() {
         filteredStocks = currentStocks.filter { self.searchText.isEmpty || ($0.symbol.lowercased().contains(self.searchText.lowercased()) || $0.name.lowercased().contains(self.searchText.lowercased())) }
+        if tabBar.isFavoritesOnly {
+            filteredStocks = filteredStocks.filter { $0.isFavorite == true }
+        }
+        
         emptyListLabel.isHidden = !filteredStocks.isEmpty
         
         stocksTableView.reloadData()
