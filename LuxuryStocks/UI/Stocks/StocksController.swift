@@ -12,6 +12,9 @@ class StocksController: UIViewController {
     private let stocksViewModel = StocksViewModel()
     
     var currentStocks: [StocksEntity] = []
+    var filteredStocks: [StocksEntity] = []
+    
+    var searchText = ""
     
     // MARK: - View groups
     
@@ -87,7 +90,12 @@ class StocksController: UIViewController {
         nowLoadingIndicator.isHidden = true
         
         currentStocks = stocks
-        emptyListLabel.isHidden = !currentStocks.isEmpty
+        reloadListithFilter()
+    }
+    
+    func reloadListithFilter() {
+        filteredStocks = currentStocks.filter { self.searchText.isEmpty || ($0.symbol.lowercased().contains(self.searchText) || $0.name.lowercased().contains(self.searchText)) }
+        emptyListLabel.isHidden = !filteredStocks.isEmpty
         
         stocksTableView.reloadData()
     }
@@ -95,13 +103,13 @@ class StocksController: UIViewController {
     // MARK: - Stocks images
     
     func fetchStocksImageIfNeeded(stocksIndex: Int) {
-        stocksViewModel.fetchImageForStocks(for: currentStocks[stocksIndex].symbol, with: currentStocks[stocksIndex].logo)
+        stocksViewModel.fetchImageForStocks(for: filteredStocks[stocksIndex].symbol, with: filteredStocks[stocksIndex].logo)
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { _ in
         }, receiveValue: { image in
             //print("\(self.currentStocks[stocksIndex].logo) \(stocksIndex)")
             
-            self.currentStocks[stocksIndex].stocksImage = image
+            self.filteredStocks[stocksIndex].stocksImage = image
             
             //DispatchQueue.main.async {
             //self.stocksTableView.reloadRows(at: [IndexPath(row: stocksIndex, section: 0)], with: .fade)

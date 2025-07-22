@@ -46,7 +46,7 @@ class StocksViewModel {
     }
     
     func fetchStockData() -> AnyPublisher<[StocksEntity], Error> {
-        if let url = URL(string: "https://mustdev.ru/api/stocks.json") {
+        if let stocksURL = Bundle.main.infoDictionary?["Stocks URL"] as? String, let url = URL(string: stocksURL) {
             return URLSession.shared.dataTaskPublisher(for: url)
                 .map(\.data)
                 .decode(type: [StocksEntity].self, decoder: JSONDecoder())

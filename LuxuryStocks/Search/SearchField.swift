@@ -28,6 +28,9 @@ import SnapKit
         }
     }
     
+    private let backView = UIImageView(image: UIImage(named: "BackArrow"))
+    private let clearView = UIImageView(image: UIImage(named: "BackArrow"))
+    
     override func awakeFromNib() {
         if subviews.count == 0 {
             guard let name = xibName,
@@ -42,21 +45,54 @@ import SnapKit
             view.snp.makeConstraints({ (make) -> Void in
                 make.edges.equalTo(self)
             })
+            
+            searchTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+            
+            searchTextField.leftView = backView
+            searchTextField.rightView = clearView
+            
+            backView.isUserInteractionEnabled = true
+            backView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(backArrowDidTap(_:))))
+            
+            clearView.isUserInteractionEnabled = true
+            clearView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(clearDidTap(_:))))
         }
     }
     
     // MARK: - Search text
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        searchTextField.leftViewMode = .always
         delegate?.searchText(didReceiveFocus: true)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+        searchTextField.leftViewMode = searchTextField.text?.isEmpty == true ? .never : .always
         delegate?.searchText(didReceiveFocus: false)
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        searchTextField.rightViewMode = searchTextField.text?.isEmpty == true ? .never : .always
+        delegate?.searchText(didChangeTo: searchTextField.text ?? "")
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searchTextField.endEditing(true)
         return true
+    }
+    
+    @objc func backArrowDidTap(_ recognizer: UITapGestureRecognizer) {
+        searchTextField.text = ""
+        searchTextField.endEditing(true)
+        
+        textFieldDidChange(searchTextField)
+        textFieldDidEndEditing(searchTextField)
+    }
+    
+    @objc func clearDidTap(_ recognizer: UITapGestureRecognizer) {
+        searchTextField.becomeFirstResponder()
+        searchTextField.text = ""
+        
+        textFieldDidChange(searchTextField)
     }
 }

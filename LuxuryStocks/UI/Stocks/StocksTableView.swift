@@ -22,14 +22,14 @@ extension StocksController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return currentStocks.count
+        return filteredStocks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "StocksCell", for: indexPath)
         
         if let stocksCell = cell as? StocksCellView {
-            stocksCell.setupStocksCell(with: currentStocks[indexPath.row]) {
+            stocksCell.setupStocksCell(with: filteredStocks[indexPath.row]) {
                 self.fetchStocksImageIfNeeded(stocksIndex: indexPath.row)
             }
         }

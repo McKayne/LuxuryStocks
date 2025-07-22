@@ -9,11 +9,15 @@ import Foundation
 
 extension StocksController: SearchFieldDelegate {
     
-    func searchText(didChangeTo: String) {
+    func searchText(didChangeTo newSearch: String) {
+        searchText = newSearch
+        suggestingsView.isHidden = !searchText.isEmpty
         
+        //print(searchText)
+        reloadListithFilter()
     }
     
     func searchText(didReceiveFocus: Bool) {
-        suggestingsView.isHidden = !didReceiveFocus
+        suggestingsView.isHidden = !didReceiveFocus || !searchText.isEmpty
     }
 }
