@@ -28,8 +28,9 @@ import SnapKit
         }
     }
     
+    private let searchView = UIImageView(image: UIImage(named: "Search"))
     private let backView = UIImageView(image: UIImage(named: "BackArrow"))
-    private let clearView = UIImageView(image: UIImage(named: "BackArrow"))
+    private let clearView = UIImageView(image: UIImage(named: "Close"))
     
     override func awakeFromNib() {
         if subviews.count == 0 {
@@ -48,8 +49,9 @@ import SnapKit
             
             searchTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
             
-            searchTextField.leftView = backView
+            searchTextField.leftView = searchView
             searchTextField.rightView = clearView
+            searchTextField.leftViewMode = .always
             
             backView.isUserInteractionEnabled = true
             backView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(backArrowDidTap(_:))))
@@ -62,12 +64,12 @@ import SnapKit
     // MARK: - Search text
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        searchTextField.leftViewMode = .always
+        searchTextField.leftView = backView
         delegate?.searchText(didReceiveFocus: true)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        searchTextField.leftViewMode = searchTextField.text?.isEmpty == true ? .never : .always
+        searchTextField.leftView = searchTextField.text?.isEmpty == true ? searchView : backView
         delegate?.searchText(didReceiveFocus: false)
     }
     

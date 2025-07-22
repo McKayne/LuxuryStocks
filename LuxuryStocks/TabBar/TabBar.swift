@@ -18,6 +18,7 @@ import SnapKit
     
     @IBOutlet weak var favoritesLabel: UILabel!
     
+    var isFavoritesHidden = false
     var isFavoritesOnly = false
     
     override func awakeFromNib() {
@@ -46,10 +47,12 @@ import SnapKit
     }
     
     @objc func selectAllStocks(_ recognizer: UITapGestureRecognizer) {
-        isFavoritesOnly = false
-        updateUI()
-        
-        delegate?.didSelect(favoritesOnly: false)
+        if !isFavoritesHidden {
+            isFavoritesOnly = false
+            updateUI()
+            
+            delegate?.didSelect(favoritesOnly: false)
+        }
     }
     
     @objc func selectFavoritesOnly(_ recognizer: UITapGestureRecognizer) {
@@ -59,8 +62,13 @@ import SnapKit
         delegate?.didSelect(favoritesOnly: true)
     }
     
-    private func updateUI() {
-        stocksLabel.font = UIFont.systemFont(ofSize: isFavoritesOnly ? 15 : 20, weight: isFavoritesOnly ? .medium : .black)
-        favoritesLabel.font = UIFont.systemFont(ofSize: isFavoritesOnly ? 20 : 15, weight: isFavoritesOnly ? .black : .medium)
+    func updateUI() {
+        favoritesLabel.isHidden = isFavoritesHidden
+        
+        stocksLabel.font = UIFont.systemFont(ofSize: isFavoritesOnly ? 18 : 28, weight: .black)
+        favoritesLabel.font = UIFont.systemFont(ofSize: isFavoritesOnly ? 28 : 18, weight: .black)
+        
+        stocksLabel.textColor = isFavoritesOnly ? .lightGray : .black
+        favoritesLabel.textColor = isFavoritesOnly ? .black : .lightGray
     }
 }

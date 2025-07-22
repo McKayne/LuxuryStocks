@@ -9,6 +9,8 @@ import UIKit
 
 class StocksCellView: UITableViewCell {
     
+    @IBOutlet weak var stocksView: UIView!
+    
     @IBOutlet weak var stocksImage: UIImageView!
     
     @IBOutlet weak var stocksSymbol: UILabel!
@@ -21,7 +23,9 @@ class StocksCellView: UITableViewCell {
     
     @IBOutlet weak var favoritesImage: UIImageView!
     
-    func setupStocksCell(with entity: StocksEntity, loadImageHandler: @escaping () -> Void) {
+    func setupStocksCell(with entity: StocksEntity, index: Int, loadImageHandler: @escaping () -> Void) {
+        stocksView.backgroundColor = index % 2 == 0 ? .white : UIColor(named: "BgGray")
+        
         stocksImage.image = entity.stocksImage ?? UIImage(named: "AppIcon")
         stocksImage.setNeedsDisplay()
         
@@ -36,7 +40,7 @@ class StocksCellView: UITableViewCell {
         stocksChange.text = "\(entity.change >= 0 ? "+" : "-")$\(abs(entity.change)) (\(abs(entity.changePercent))%)"
         stocksChange.textColor = entity.change >= 0 ? .green : .red
         
-        favoritesImage.image = UIImage(named: entity.isFavorite == true ? "FavoritesActive" : "BackArrow")
+        favoritesImage.image = UIImage(named: entity.isFavorite == true ? "FavoritesActive" : "FavoritesInactive")
         favoritesImage.setNeedsDisplay()
     }
 }

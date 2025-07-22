@@ -30,7 +30,7 @@ extension StocksController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "StocksCell", for: indexPath)
         
         if let stocksCell = cell as? StocksCellView {
-            stocksCell.setupStocksCell(with: filteredStocks[indexPath.row]) {
+            stocksCell.setupStocksCell(with: filteredStocks[indexPath.row], index: indexPath.row) {
                 self.fetchStocksImageIfNeeded(stocksIndex: indexPath.row)
             }
         }

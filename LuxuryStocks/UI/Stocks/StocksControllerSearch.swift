@@ -13,11 +13,12 @@ extension StocksController: SearchFieldDelegate {
         searchText = newSearch
         suggestingsView.isHidden = !searchText.isEmpty
         
-        //print(searchText)
         reloadListithFilter()
     }
     
     func searchText(didReceiveFocus: Bool) {
+        tabBar.isFavoritesHidden = didReceiveFocus || !searchText.isEmpty
+        tabBar.updateUI()
         suggestingsView.isHidden = !didReceiveFocus || !searchText.isEmpty
         
         if didReceiveFocus {

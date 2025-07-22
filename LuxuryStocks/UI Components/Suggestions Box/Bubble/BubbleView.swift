@@ -24,23 +24,8 @@ import SnapKit
             container.snp.makeConstraints({ (make) -> Void in
                 make.edges.equalTo(self)
             })
-            
-            //container.frame = CGRect(x: 50, y: 50, width: 100, height: 50)
-            //container.autoresizingMask = autoresizingMask
-            //container.alpha = alpha
-            //container.translatesAutoresizingMaskIntoConstraints = false//translatesAutoresizingMaskIntoConstraints
-            
+                        
             bubbleText.text = text
-            
-            /*let textSize = self.bubbleText.text?.size(withAttributes: [.font: self.bubbleText.font]) ?? .zero
-            let textOffset: CGFloat = 20
-            let viewOffset: CGFloat = 10
-            let size = textSize.width + textOffset * 2 + viewOffset * 2
-            
-            print(size)
-            print(UIScreen.main.bounds.width)*/
-        } else {
-            print("Fuck")
         }
     }
     
@@ -49,9 +34,6 @@ import SnapKit
         let textOffset: CGFloat = 20
         let viewOffset: CGFloat = 10
         let size = textSize.width + textOffset * 2 + viewOffset * 2
-        
-        //print(size)
-        //print(UIScreen.main.bounds.width)
         
         return size
     }

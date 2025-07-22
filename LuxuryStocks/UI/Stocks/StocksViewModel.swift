@@ -85,8 +85,6 @@ class StocksViewModel {
         
         let imagePublisher = PassthroughSubject<String, Error>()
         
-        //print(url)
-        
         if let url = URL(string: url) {
         
             Publishers.Zip(
@@ -94,13 +92,14 @@ class StocksViewModel {
                 fetchCachedImage(imagePublisher: imagePublisher)
             ).sink(receiveCompletion: { _ in
             }, receiveValue: { apiImage, cachedImage in
-                //print(apiImage)
-                //print(cachedImage)
-                
-                stocksImagesPublisher.send(apiImage)
+                if let apiImage = apiImage {
+                    stocksImagesPublisher.send(apiImage)
+                } else if let cachedImage = cachedImage {
+                    stocksImagesPublisher.send(cachedImage)
+                } else {
+                    stocksImagesPublisher.send(nil)
+                }
             }).store(in: &subscriptions)
-        } else {
-            
         }
         
         imagePublisher.send(symbol)
@@ -114,7 +113,7 @@ class StocksViewModel {
             .map { data in
                 let image = UIImage(data: data)
                 if image != nil {
-                    
+                    self.saveImageToCache(for: symbol, data: data)
                 }
                 return image
             }
@@ -135,11 +134,36 @@ class StocksViewModel {
     }
     
     private func saveImageToCache(for symbol: String, data: Data) {
-        
+        if let documentsDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first {
+            let documentsURL = URL(fileURLWithPath: documentsDirectory)
+            let imageURL = documentsURL.appendingPathComponent(symbol + ".jpg")
+            
+            do {
+                try data.write(to: imageURL)
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }
     }
     
     private func cachedImage(for symbol: String) -> UIImage? {
-        return UIImage()
+        var image: UIImage?
+        
+        if let documentsDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first {
+            let documentsURL = URL(fileURLWithPath: documentsDirectory)
+            let imageURL = documentsURL.appendingPathComponent(symbol + ".jpg")
+            
+            if FileManager.default.fileExists(atPath: imageURL.path) {
+                do {
+                    let data = try Data(contentsOf: imageURL)
+                    image = UIImage(data: data)
+                } catch let error {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        
+        return image
     }
     
     // MARK: - Search history
@@ -149,7 +173,7 @@ class StocksViewModel {
         
         let configutation = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
         
-        if let stocksURL = Bundle.main.infoDictionary?["Stocks URL"] as? String, let url = URL(string: stocksURL), let realm = try? Realm(configuration: configutation) {
+        if let realm = try? Realm(configuration: configutation) {
             let realmPublisher = PassthroughSubject<Realm, Error>()
             
             fetchCachedSearches(realmPublisher: realmPublisher)

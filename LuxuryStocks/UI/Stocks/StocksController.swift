@@ -94,9 +94,6 @@ class StocksController: UIViewController {
     }
     
     private func updateStocks(stocks: [StocksEntity]) {
-        //stocksViewModel.fetchImageForStocks(for: stocks[0].symbol, with: stocks[0].logo)
-        
-        //print(stocks)
         nowLoadingIndicator.isHidden = true
         
         currentStocks = stocks
@@ -105,7 +102,7 @@ class StocksController: UIViewController {
     
     func reloadListithFilter() {
         filteredStocks = currentStocks.filter { self.searchText.isEmpty || ($0.symbol.lowercased().contains(self.searchText.lowercased()) || $0.name.lowercased().contains(self.searchText.lowercased())) }
-        if tabBar.isFavoritesOnly {
+        if tabBar.isFavoritesOnly, !tabBar.isHidden {
             filteredStocks = filteredStocks.filter { $0.isFavorite == true }
         }
         
