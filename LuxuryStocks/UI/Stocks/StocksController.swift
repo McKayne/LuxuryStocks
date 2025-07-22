@@ -26,6 +26,8 @@ class StocksController: UIViewController {
     
     // MARK: - Search bar
     
+    @IBOutlet weak var searchField: SearchField!
+    
     // MARK: - Stocks list
     
     @IBOutlet weak var stocksTableView: UITableView!
@@ -37,6 +39,8 @@ class StocksController: UIViewController {
     // MARK: - Search suggestings
     
     @IBOutlet weak var suggestionsBox: SuggestionsBoxView!
+    
+    @IBOutlet weak var searchHistoryLabel: UILabel!
     
     @IBOutlet weak var searchHistoryBox: SuggestionsBoxView!
     
@@ -98,7 +102,7 @@ class StocksController: UIViewController {
     }
     
     func reloadListithFilter() {
-        filteredStocks = currentStocks.filter { self.searchText.isEmpty || ($0.symbol.lowercased().contains(self.searchText) || $0.name.lowercased().contains(self.searchText)) }
+        filteredStocks = currentStocks.filter { self.searchText.isEmpty || ($0.symbol.lowercased().contains(self.searchText.lowercased()) || $0.name.lowercased().contains(self.searchText.lowercased())) }
         emptyListLabel.isHidden = !filteredStocks.isEmpty
         
         stocksTableView.reloadData()
@@ -111,19 +115,28 @@ class StocksController: UIViewController {
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { _ in
         }, receiveValue: { image in
-            //print("\(self.currentStocks[stocksIndex].logo) \(stocksIndex)")
-            
-            self.filteredStocks[stocksIndex].stocksImage = image
-            
-            //DispatchQueue.main.async {
-            //self.stocksTableView.reloadRows(at: [IndexPath(row: stocksIndex, section: 0)], with: .fade)
-            self.stocksTableView.reloadData()
-            //}
-            
-            //self.updateStocks(stocks: stocks)
+            if stocksIndex < self.filteredStocks.count {
+                self.filteredStocks[stocksIndex].stocksImage = image
+                self.stocksTableView.reloadData()
+            }
         }).store(in: &stocksViewModel.subscriptions)
+    }
+    
+    // MARK: - Search history
+    
+    func fetchSearchHistory() {
+        searchHistoryBox.removeAll()
         
-        //stocksViewModel.fetchImageForStocks(for: currentStocks[stocksIndex].symbol, with: currentStocks[stocksIndex].logo)
+        stocksViewModel.fetchSearchHistory()
+            .receive(on: RunLoop.main)
+            .sink(receiveCompletion: { _ in
+        }, receiveValue: { cachedSearches in
+            self.searchHistoryLabel.isHidden = cachedSearches.isEmpty
+            
+            for search in cachedSearches {
+                self.searchHistoryBox.appendSuggestion(text: search.search)
+            }
+        }).store(in: &stocksViewModel.subscriptions)
     }
     
     // MARK: - Alerts

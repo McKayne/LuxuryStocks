@@ -142,6 +142,45 @@ class StocksViewModel {
         return UIImage()
     }
     
+    // MARK: - Search history
+    
+    func fetchSearchHistory() -> PassthroughSubject<[SearchEntity], Error> {
+        let searchPublisher = PassthroughSubject<[SearchEntity], Error>()
+        
+        let configutation = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
+        
+        if let stocksURL = Bundle.main.infoDictionary?["Stocks URL"] as? String, let url = URL(string: stocksURL), let realm = try? Realm(configuration: configutation) {
+            let realmPublisher = PassthroughSubject<Realm, Error>()
+            
+            fetchCachedSearches(realmPublisher: realmPublisher)
+                .receive(on: RunLoop.main)
+                .sink(receiveCompletion: { _ in
+            }, receiveValue: { cachedSearches in
+                
+                if let cachedSearches = cachedSearches {
+                    searchPublisher.send(cachedSearches)
+                } else {
+                    searchPublisher.send([])
+                }
+            }).store(in: &subscriptions)
+            
+            realmPublisher.send(realm)
+        }
+        
+        return searchPublisher
+    }
+    
+    func fetchCachedSearches(realmPublisher: PassthroughSubject<Realm, Error>) -> AnyPublisher<[SearchEntity]?, Never> {
+        let publisher = realmPublisher.map { realm in
+            return Array(realm.objects(SearchEntity.self))
+        }.catch { error -> AnyPublisher<[SearchEntity]?, Never> in
+            return Just(nil).eraseToAnyPublisher()
+        }
+        .eraseToAnyPublisher()
+        
+        return publisher
+    }
+    
     // MARK: - Database
     
     private func saveStocksToCache(stocks: [StocksEntity], to realm: Realm) {
@@ -171,5 +210,22 @@ class StocksViewModel {
         }
         
         return entity
+    }
+    
+    func saveSearch(text: String) {
+        let configutation = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
+        
+        if let realm = try? Realm(configuration: configutation) {
+            do {
+                try realm.write {
+                    let search = SearchEntity()
+                    search.search = text
+                    
+                    realm.add(search, update: .modified)
+                }
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }
     }
 }

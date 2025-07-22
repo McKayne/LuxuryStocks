@@ -19,5 +19,13 @@ extension StocksController: SearchFieldDelegate {
     
     func searchText(didReceiveFocus: Bool) {
         suggestingsView.isHidden = !didReceiveFocus || !searchText.isEmpty
+        
+        if didReceiveFocus {
+            fetchSearchHistory()
+        }
+        
+        if !didReceiveFocus, !searchText.isEmpty {
+            stocksViewModel.saveSearch(text: searchText)
+        }
     }
 }

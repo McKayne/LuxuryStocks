@@ -226,8 +226,11 @@
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="xibName" value="Suggestions"/>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="KSI-Dy-8HN"/>
+                                        </connections>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="You've searched for this" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5bj-Vk-Pp2">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="You've searched for this" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5bj-Vk-Pp2">
                                         <rect key="frame" x="10" y="152" width="394" height="21"/>
                                         <fontDescription key="fontDescription" type="system" weight="black" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -239,6 +242,9 @@
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="xibName" value="Suggestions"/>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="Flr-v3-uhE"/>
+                                        </connections>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Popular requests" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tto-8i-Vlo">
                                         <rect key="frame" x="10" y="0.0" width="394" height="20.5"/>
@@ -283,7 +289,9 @@
                     <connections>
                         <outlet property="emptyListLabel" destination="YnI-Yi-F98" id="ViE-Jc-RvT"/>
                         <outlet property="nowLoadingIndicator" destination="vB6-AS-Man" id="2f9-8B-hAg"/>
+                        <outlet property="searchField" destination="VWc-Z1-P8b" id="IzT-yv-NyY"/>
                         <outlet property="searchHistoryBox" destination="Z6C-Er-es3" id="iV6-CH-OoV"/>
+                        <outlet property="searchHistoryLabel" destination="5bj-Vk-Pp2" id="hRW-ek-nQo"/>
                         <outlet property="searchView" destination="XsY-FG-oek" id="lDA-wy-Qmg"/>
                         <outlet property="stocksTableView" destination="dnN-vI-CGF" id="Jvg-mp-VZw"/>
                         <outlet property="stocksView" destination="Bqg-qq-yP2" id="r00-b1-oTr"/>

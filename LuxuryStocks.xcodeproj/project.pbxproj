@@ -29,6 +29,9 @@
 		7F807D192E2D836A00D0AA50 /* BubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F807D182E2D836A00D0AA50 /* BubbleView.swift */; };
 		7F807D1B2E2D953B00D0AA50 /* SuggestionsBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F807D1A2E2D953B00D0AA50 /* SuggestionsBoxView.swift */; };
 		7F807D1E2E2D957200D0AA50 /* Suggestions.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F807D1D2E2D957200D0AA50 /* Suggestions.xib */; };
+		7F9E622A2E30005E00F9CF4C /* SuggestionsBoxDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9E62292E30005E00F9CF4C /* SuggestionsBoxDelegate.swift */; };
+		7F9E622C2E3005C600F9CF4C /* StocksControllerSuggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9E622B2E3005C600F9CF4C /* StocksControllerSuggestions.swift */; };
+		7F9E622E2E300BF000F9CF4C /* SearchEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9E622D2E300BF000F9CF4C /* SearchEntity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +57,9 @@
 		7F807D182E2D836A00D0AA50 /* BubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleView.swift; sourceTree = "<group>"; };
 		7F807D1A2E2D953B00D0AA50 /* SuggestionsBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsBoxView.swift; sourceTree = "<group>"; };
 		7F807D1D2E2D957200D0AA50 /* Suggestions.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Suggestions.xib; sourceTree = "<group>"; };
+		7F9E62292E30005E00F9CF4C /* SuggestionsBoxDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsBoxDelegate.swift; sourceTree = "<group>"; };
+		7F9E622B2E3005C600F9CF4C /* StocksControllerSuggestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksControllerSuggestions.swift; sourceTree = "<group>"; };
+		7F9E622D2E300BF000F9CF4C /* SearchEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEntity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +124,7 @@
 				7F68CB462E2BED510059723B /* StocksTableView.swift */,
 				7F68CB4B2E2BF04A0059723B /* StocksViewModel.swift */,
 				7F69BB202E2C858400A63186 /* StocksControllerSearch.swift */,
+				7F9E622B2E3005C600F9CF4C /* StocksControllerSuggestions.swift */,
 			);
 			path = Stocks;
 			sourceTree = "<group>";
@@ -144,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				7F6A75DD2E2CA2DA00CBC556 /* StocksEntity.swift */,
+				7F9E622D2E300BF000F9CF4C /* SearchEntity.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -173,6 +181,7 @@
 				7F807D172E2D835000D0AA50 /* Bubble */,
 				7F807D1A2E2D953B00D0AA50 /* SuggestionsBoxView.swift */,
 				7F807D1D2E2D957200D0AA50 /* Suggestions.xib */,
+				7F9E62292E30005E00F9CF4C /* SuggestionsBoxDelegate.swift */,
 			);
 			path = "Suggestions Box";
 			sourceTree = "<group>";
@@ -260,6 +269,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F9E622E2E300BF000F9CF4C /* SearchEntity.swift in Sources */,
 				7F807D1B2E2D953B00D0AA50 /* SuggestionsBoxView.swift in Sources */,
 				7F69BB212E2C858400A63186 /* StocksControllerSearch.swift in Sources */,
 				7F69BB1A2E2C795400A63186 /* TabBar.swift in Sources */,
@@ -267,9 +277,11 @@
 				7F68CB312E2BEB560059723B /* AppDelegate.swift in Sources */,
 				7F68CB472E2BED510059723B /* StocksTableView.swift in Sources */,
 				7F69BB1F2E2C84BA00A63186 /* SearchFieldDelegate.swift in Sources */,
+				7F9E622C2E3005C600F9CF4C /* StocksControllerSuggestions.swift in Sources */,
 				7F807D192E2D836A00D0AA50 /* BubbleView.swift in Sources */,
 				7F68CB492E2BEF210059723B /* StocksCellView.swift in Sources */,
 				7F6A75DE2E2CA2DA00CBC556 /* StocksEntity.swift in Sources */,
+				7F9E622A2E30005E00F9CF4C /* SuggestionsBoxDelegate.swift in Sources */,
 				7F68CB332E2BEB560059723B /* SceneDelegate.swift in Sources */,
 				7F7B87342E2C6A060067306F /* SearchField.swift in Sources */,
 				7F68CB4C2E2BF04A0059723B /* StocksViewModel.swift in Sources */,
